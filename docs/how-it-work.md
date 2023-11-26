@@ -100,7 +100,7 @@ Add `server` as devDependencies in web/packages.json
 ```
 
 :::warning
-When web side run build, Typescript will still apply the strict rule to server side code. so make sure both side has same strict rule.
+When executing build on the front-end, Typescript will use the strict rules in web/tsconfig.json to check the backend's TS code, so please ensure that the strict rules on the front-end and back-end are consistent. The reason is that the tsc check only skips the. dts file, not the. ts file
 :::
 
 Create a reqeust object with ApiTypesRecord
