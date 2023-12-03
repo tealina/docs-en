@@ -7,7 +7,7 @@ hero:
   text: "A CLI for build end-to-end type safety APIs"
   tagline: and code, types, document generation.
   image:
-    src: logo.svg
+    src: logov2.svg
     alt: Tealina
   actions:
     - theme: brand
