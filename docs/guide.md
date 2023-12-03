@@ -31,6 +31,4 @@ $ bunx create-vite
 
 Then follow the prompts, once project created, check the server/README.md.
 
-Other server frameworks are not ready yet, welcome to contribute.
-
 The Web template is create by calling [`create-vite`](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)

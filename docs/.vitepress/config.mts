@@ -22,6 +22,19 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide' },
+      {
+        text:'v1.1.2',
+        items:[
+          {
+            text:'Release Notes',
+            link:'https://github.com/tealina/tealina/releases',
+          },
+          {
+            text:'Contributing',
+            link: 'https://github.com/tealina/tealina/blob/main/CONTRIBUTING.md'
+          }
+        ]
+      }
       // { text: 'Commands', link: '/api' },
       // { text: 'Configration', link: '/config' },
       // { text: 'Family', link: '/family' },
