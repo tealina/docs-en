@@ -1,9 +1,12 @@
-Tealina achieve end-to-end type safety by a few conventions and Typescript basic features.
-Here is a quick explaination with minimal codebase.
-### Convetions
+Tealina implements end-to-end typing through a few conventions and the basic features of Typesript, Here is the least amount of code is used to help you quickly understand its principle:
 
-APIs batch export in key value structure
+## Type extraction flowchart
+![type-flow](/type-flow.png)
 
+## Batch export APIs
+Batch export of APIs using the key value structure brings two benefits:
+1. Each API directory only needs to define a route once
+2. Convenient for subsequent mapping types
 ```ts
 /// [api-dir/index.ts]
 export default {
@@ -15,11 +18,12 @@ export default {
   'category/create': import('./category/create.js'),
 }
 ```
-Use handler type alias that can be inferred
 
+## Type alias
+A framework based handler function that encapsulates a type alias: HandlerType<input, output, header,...Other>
 ```ts
 // api-v1/post/category/create.ts
-import type { HandlerType } from '../../../types/handler.js' //source code at next code block
+import type { HandlerType } from '../../../types/handler.js' //部分源码在下面
 
 type ApiType = HandlerType<{ body: Pure.CategoryCreateInput }, Pure.Category>
 
@@ -30,13 +34,12 @@ const handler:ApiType = (req, res) => {
 export default handler
 ```
 
-### Typescript
-
-Use typescript to extra API infomations
+### Type extraction and remapping
+Using the infer syntax to extract API information
 ::: code-group
 ```ts [types/api-v1.d.ts]
 import apis from "../src/api-v1/index.ts";
-import type { ExtractApiType } from "./handler.js";
+import type { ExtractApiType } from "./handler.js"; // infer 在文件内用到 
 
 type RawApis = typeof apis;
 export type ApiTypesRecord = {
@@ -64,7 +67,8 @@ type ExtractApiType<T> = T extends HandlerType<
 
 ```
 :::
-::: info ApiTypesRecord would be like this
+
+::: info ApiTypesRecord will become like this
 ```ts
 type ApiTypesRecord = {
   post: {
@@ -76,9 +80,10 @@ type ApiTypesRecord = {
 };
 ```
 :::
-### Link Package
-Add `exports` field in server/package.json
 
+## Type sharing with front-end
+Using the package management feature of Node, expose the type to the front-end,
+Define the `exports` type declaration in `server/package.json` and export API types
 ```json
 // server/package.json
 {
@@ -88,7 +93,7 @@ Add `exports` field in server/package.json
 }
 ```
 
-Add `server` as devDependencies in web/packages.json
+Add `server` as devDependencies in the front-end `web/packages.json`
 
 ```json
 // web/package.json
@@ -100,10 +105,12 @@ Add `server` as devDependencies in web/packages.json
 ```
 
 :::warning
-When executing build on the front-end, Typescript will use the strict rules in web/tsconfig.json to check the backend's TS code, so please ensure that the strict rules on the front-end and back-end are consistent. The reason is that the tsc check only skips the. dts file, not the. ts file
+When executing build on the front-end, Typescript will use the constraint rules in `web/tsconfig.json` to check the TS code on the back-end. The reason is that the TSC check only skips the .d.ts file, not the .ts file. Therefore, Ensure that the constraint rules on the front-end and back-end are consistent
 :::
 
-Create a reqeust object with ApiTypesRecord
+## Encapsulation request function
+Encapsulate a request object using the API type exported from the backend,
+When writing code, real-time types are used, and using the proxy feature, all requests are handed over to axios.request for processing
 ::: code-group
 
 ```ts [web/src/api/req.ts]
@@ -121,7 +128,7 @@ export const req = createReq<MakeReqType<ApiTypesRecord>>(instance);
 
 ```ts [web/src/api/createReq.ts]
 /**
- * return a proxied object that points to `axiosInstance`.
+ * Returns a proxy object pointing internally to ` axiosInstance `
  * @param axiosInstance
  */
 const createReq = <T extends ApiShape>(axiosInstance: AxiosInstance) =>
@@ -139,7 +146,7 @@ const createReq = <T extends ApiShape>(axiosInstance: AxiosInstance) =>
 
 :::
 
- Use `req` to calling APIs
+Using 'req' to call APIs with intelligent prompts throughout the process
 
 ```ts
 //web/src/some-file.ts
@@ -152,3 +159,11 @@ req.post("category/create", {
   },
 });
 ```
+
+:::tip Type delay
+If there is an update to the backend type and the frontend does not respond,
+This situation is because the Typescript language service has a cache,
+Two solutions:
+1. Locate the variable, F12 jumps to the definition, triggering a type refresh
+2. Manually restart the TS service, using VS code as an example, Ctrl+Shift+P, find: Restart TS Server and execute it
+:::

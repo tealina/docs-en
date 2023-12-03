@@ -14,8 +14,8 @@ hero:
       text: Get Started
       link: /guide
     - theme: alt
-      text: Conventions
-      link: /conventions
+      text: Why Tealina ?
+      link: /why
 
 features:
   - title: End-to-end type safety
@@ -29,7 +29,7 @@ features:
 ---
 
 <script setup>
-import serverMp4 from '/server.mp4?url'
+import serverMp4 from '/server1.mp4?url'
 import webMp4 from '/web.mp4?url'
 </script>
 

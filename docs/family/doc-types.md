@@ -1,11 +1,11 @@
-# The API document types
 The API document type designed for transformation tools.
-Some key features below:
-1. Independent package (so you can install and build your own tools)
-1. More close to typescript
-1. Easy to code with
 
-### Example
+## Key features
+1. Independent package (so you can install and build your own tools)
+2. More close to typescript
+3. Support non literal object, like File, Date
+
+## Example
  transform doc to UI
 ```tsx
 // type2cell.tsx
@@ -33,9 +33,9 @@ export function type2cell(d: DocNode): ReactElement {
 }
 
 ```
-### FAQ
+## FAQ
 ####  Multiple http status code?
-  Not support directly, Some alternative way:,
+  Not support directly, here some alternative way:,
   1. Add comment to handler, (when error handled in the interceptors)
   ```ts
   /**

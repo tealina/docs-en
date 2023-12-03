@@ -5,7 +5,19 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Tealina',
   description: 'Tealina document',
+  locales: {
+    root:{
+      label: 'English',
+      lang: 'en-US',
+    } ,
+    zh:{
+      label: '简体中文',
+      lang: 'zh',
+      link: 'https://cn.tealina.dev/',
+    } ,
+  },
   themeConfig: {
+
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
@@ -19,34 +31,19 @@ export default defineConfig({
         text: 'Guide',
         items: [
           { text: 'Get Started', link: '/guide' },
-          { text: 'Why Tealina?', link: '/why' },
-          { text: 'How it work?', link: '/how-it-work' },
+          { text: 'Why Tealina', link: '/why' },
+          { text: 'How it work', link: '/how-it-work' },
           { text: 'Conventions', link: '/conventions' },
+          { text: 'CLI', link: '/commands/cli' },
           // { text: 'Limitation', link: '/limitation' },
       
       ],
       },
       {
-        text: 'Commands',
-        items: [
-          { text: 'capi', link: '/commands/capi' },
-          { text: 'dapi', link: '/commands/dapi' },
-          { text: 'sapi', link: '/commands/sapi' },
-          { text: 'gpure', link: '/commands/gpure' },
-          { text: 'gdoc', link: '/commands/gdoc' },
-        ],
-      },
-      {
         text:'Configuration',
         items:[
-          {text:'Code Generation',link:'/configuration/templates'},
-          {text:'Type Generation',link:'/configuration/gpure'},
-        ]
-      },
-      {
-        text:'Setup',
-        items:[
-          {text:'Registe Router',link:'/configuration/router-registe'},
+          {text:'Templates',link:'/configuration/templates'},
+          {text:'Type Generation',link:'/configuration/gtype'},
           {text:'Multiple api-dir',link:'/configuration/multiple-api-dir'},
         ]
       },
@@ -56,6 +53,10 @@ export default defineConfig({
           {text:'@tealina/doc-ui',link:'/family/doc-ui'},
           {text:'@tealina/doc-types',link:'/family/doc-types'},
         ]
+      },
+      {
+        text: 'Edgecase',
+        link: '/edgecase'
       }
     ],
 

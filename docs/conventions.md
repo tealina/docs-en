@@ -1,4 +1,6 @@
-# The conventions
+Follow the conventions, So Tealina can help you generate API documentation, type declarations, and updated index files.
+
+## File Structure
 1. All API files store in `[api-dir]/[method]`,
 ```md {1,3}
 api-dir
@@ -21,7 +23,7 @@ api-dir
    └─── create.ts
    
 ```
-
+## Inside File
 2. Each API file has an export default handler
 ::: code-group
 ```ts [create.ts] {12}
@@ -96,6 +98,8 @@ export const convention: EnsureHandlerType = (...handlers) => handlers
 
 ```
 :::
+
+## Index
 4. `[api-dir]/[method]/index.ts` declare route and hanlder Map
   ```ts
     export default {
@@ -110,6 +114,8 @@ export const convention: EnsureHandlerType = (...handlers) => handlers
       ...
     }
   ```
+
+  ## Type declaration
 6. `[api-dir].d.ts` for APIs type entry
 ```ts
 import apis from '../src/api-v1/index.ts'
@@ -120,8 +126,3 @@ export type ApiTypesRecord = {
   [Method in keyof RawApis]: ResolveApiType<Awaited<RawApis[Method]>['default']>
 }
 ```
-::: tip
-Tealina commands will help you flow the conventions
-:::
-
-

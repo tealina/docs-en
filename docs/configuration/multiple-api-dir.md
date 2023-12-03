@@ -1,12 +1,11 @@
-All Tealina features work in one `[api-dir]`, when you have another api-dir, eg: api-v2,
-follow the setups below:
+All features of Tealina work in one `api-dir` directory, When there are other API directories, such as api-v2, manual processing is required:
 
-1. Update server/packages.json
+## 1. Update server/packages.json
 ```json {4}
 {
   "scripts": {
-    "v1": "tealina --api-dir src/api-v1",
-    "v2": "tealina --api-dir src/api-v2" //[!code ++]
+    "v1": "tealina src/api-v1",
+    "v2": "tealina src/api-v2" //[!code ++]
   },
   "exports": {
     "./api/v1": "./types/api-v1.d.ts",
@@ -14,9 +13,11 @@ follow the setups below:
   }
 }
 ```
-2. Create first API (will genereate all relative files)
+
+## 2. Create first API 
+will genereate all relative files
 ```bash
-yarn v2 capi get/status
+yarn v2 get/status
 ```
 ::: details output
 <span style="color:#3dd68c"> + </span> api-v2/index.ts\
@@ -25,36 +26,51 @@ yarn v2 capi get/status
 <span style="color:#3dd68c"> + </span> types/api-v2.d.ts
 :::
 
-3. Registe `v2` API router
+## 3. Build `v2` API route
+Copy a copy of src/app/buildV1Router.ts, rename it to buildV2Router.ts, and modify the file content as needed.
+```ts {3,11}
+import { Router } from 'express'
+import { map, pipe, omitFn } from 'fp-lite'
+import apisV2 from '../api-v2/index.js' 
+// ...
 
-```ts {14-19}
-// server/src/app/index.ts
-import express, { Router } from "express";
-import apisV1 from "../api-v1/index.js";
-import apisV2 from "../api-v2/index.js"; //[!code ++]
-//...
+const registeSeparetely = (record: ResolvedAPIs) => {
+  // ...
+}
 
-const buildV1Router = async () => {
-  const record = await loadAPIs(apisV1);
-  validateMethod(record);
-  //....
-  return router;
-};
+export const buildV1Router = async () => {
+  const record = await loadAPIs(apisV2)
+  validateMethod(record)
+  const [openRouter, authRouter] = registeSeparetely(record)
+  const router = Router().use(openRouter).use(authRouter)
+  return router
+}
 
-const buildV2Router = async () => { //[!code ++]
-  const record = await loadAPIs(apisV2);
-  validateMethod(record);
-  //....
-  return router;
-};
+```
+## 4. Registe `v2` API router
+```ts 
+// server/src/app/buildApiRouter.ts
+import { Router } from 'express'
+import { setupApiHeaders } from '../middlewares/setupApiHeaders.js'
+import { buildV1Router } from './buildV1Router.js'
+import { buildV2Router } from './buildV2Router.js' //[!code ++]
+import { apiNotFoundHandler } from '../middlewares/notFoundHandler.js'
 
-express()
-.use("/api/v1", buildV1Router)
-.use("/api/v2", buildV2Router); //[!code ++]
+export const buildApiRoute = async () => {
+  const v1ApiRouter = await buildV1Router()
+  return (
+    Router({ caseSensitive: true })
+      .use(setupApiHeaders)
+      .use('/v1', v1ApiRouter)
+      .use('/v2', v2ApiRouter) //[!code ++]
+      .use(apiNotFoundHandler)
+  )
+}
 
 //...
 ```
-4. Registe `v2` doc router
+
+## 5.Registe `v2` doc router
 ::: details
 ```ts {9-13,25-27}
 // server/src/app/docRouter.ts
@@ -89,8 +105,9 @@ const docRouter = Router({ caseSensitive: true })
 export { docRouter, VDOC_BASENAME }
 ```
 :::
-5. Create new req.ts in the web/src/api direcotry.
 
+## 6. Create a new req.ts
+Copy a copy of web/src/api/req.ts, rename it to reqV2.ts, and modify the file content as needed.
 ```ts [reqV2.ts] {3}
 // web/src/api/reqV2.ts
 import axios from "axios";

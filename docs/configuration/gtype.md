@@ -1,5 +1,4 @@
-# Config for generate type from schema.prisma
-By default, `gpure` follow the same basic rule as `prisma generate`,
+By default, `gtype` follow the same basic rule as `prisma generate`,
 eg: mark optional for all property when making `xxUpdateInput`.
 You can change most of the them in `tealina.config.mjs`
 ```js
@@ -7,13 +6,13 @@ You can change most of the them in `tealina.config.mjs`
 import { defineConfig } from 'tealina'
 
 export default defineConfig({
-  gpure:{
+  gtype:{
     // ...
   }
 })
 ```
 
-### Example
+## Partial Overwrite
  Exlude the `id` property 
 ::: code-group
 ```js [ tealina.config.mjs ]
@@ -50,7 +49,7 @@ model Category {
 ```
 :::
 
-### Type remap
+## Type remap
 Type remap is more straightforward than overwrite,
 and effect all kind,(`model`,`type`,`xxCreateInput`,`xxUpdateInput`,`xx`)
 ```js
@@ -68,7 +67,7 @@ and effect all kind,(`model`,`type`,`xxCreateInput`,`xxUpdateInput`,`xx`)
 }
 ```
 
-### The default type Map
+## The default type Map
 ```ts
 /** https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#model-field-scalar-types */
 const justMap = new Map<string, string>([
