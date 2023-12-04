@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Tealina"
-  text: "A CLI for build end-to-end type safety APIs"
+  text: "A CLI made for end-to-end type safety APIs"
   tagline: and code, types, document generation.
   image:
     src: logov2.svg
