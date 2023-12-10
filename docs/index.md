@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Tealina"
-  text: "A CLI made for end-to-end type safety APIs"
-  tagline: and code, types, document generation.
+  text: "Enable your full stack project to have end-to-end types and API documentation"
+  # tagline: and code, types, document generation.
   image:
     src: logov2.svg
     alt: Tealina
@@ -28,6 +28,12 @@ features:
     details: API route according the file structure
 ---
 
+<style>
+  .container p.text{
+    font-size: 23px;
+    line-height: 1.5;
+  }
+</style>
 <script setup>
 import serverMp4 from '/server1.mp4?url'
 import webMp4 from '/web.mp4?url'
