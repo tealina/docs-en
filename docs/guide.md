@@ -29,6 +29,6 @@ $ bunx create-vite
 ``` -->
 :::
 
-Then follow the prompts, once project created, check the server/README.md.
+Then follow the prompts!
 
-The Web template is create by calling [`create-vite`](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)
+The Web template is create by calling [`create-vite`](https://vitejs.dev/guide/#scaffolding-your-first-vite-project), and create-tealina injected some extra code
