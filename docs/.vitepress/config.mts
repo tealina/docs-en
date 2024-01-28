@@ -6,15 +6,15 @@ export default defineConfig({
   title: 'Tealina',
   description: 'Tealina document',
   locales: {
-    root:{
+    root: {
       label: 'English',
       lang: 'en-US',
-    } ,
-    zh:{
+    },
+    zh: {
       label: '简体中文',
       lang: 'zh',
       link: 'https://cn.tealina.dev/',
-    } ,
+    },
   },
   themeConfig: {
 
@@ -23,14 +23,14 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide' },
       {
-        text:'v1.1.2',
-        items:[
+        text: 'v1.1.3',
+        items: [
           {
-            text:'Release Notes',
-            link:'https://github.com/tealina/tealina/releases',
+            text: 'Release Notes',
+            link: 'https://github.com/tealina/tealina/releases',
           },
           {
-            text:'Contributing',
+            text: 'Contributing',
             link: 'https://github.com/tealina/tealina/blob/main/CONTRIBUTING.md'
           }
         ]
@@ -49,22 +49,22 @@ export default defineConfig({
           { text: 'Conventions', link: '/conventions' },
           { text: 'CLI', link: '/commands/cli' },
           // { text: 'Limitation', link: '/limitation' },
-      
-      ],
+
+        ],
       },
       {
-        text:'Configuration',
-        items:[
-          {text:'Templates',link:'/configuration/templates'},
-          {text:'Type Generation',link:'/configuration/gtype'},
-          {text:'Multiple api-dir',link:'/configuration/multiple-api-dir'},
+        text: 'Configuration',
+        items: [
+          { text: 'Templates', link: '/configuration/templates' },
+          { text: 'Type Generation', link: '/configuration/gtype' },
+          { text: 'Multiple api-dir', link: '/configuration/multiple-api-dir' },
         ]
       },
       {
-        text:'Family',
-        items:[
-          {text:'@tealina/doc-ui',link:'/family/doc-ui'},
-          {text:'@tealina/doc-types',link:'/family/doc-types'},
+        text: 'Family',
+        items: [
+          { text: '@tealina/doc-ui', link: '/family/doc-ui' },
+          { text: '@tealina/doc-types', link: '/family/doc-types' },
         ]
       },
       {
